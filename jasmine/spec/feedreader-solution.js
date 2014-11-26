@@ -39,4 +39,37 @@ $(function() {
       expect(body.attr('class')).toBe(currentClass);
     });
   });
+
+
+  describe('Initial entries', function() {
+    beforeEach(function(done) {
+      loadFeed(0, function() {
+        done();
+      });
+    });
+
+    it('have at least one entry', function(done) {
+      var numEntries = $('.feed .entry').length;
+      console.log(numEntries);
+      expect(numEntries).toBeGreaterThan(0);
+      done();
+    });
+  });
+
+  describe('New feed selection', function() {
+    var currentContent;
+
+    beforeEach(function(done) {
+      currentContent = $('.feed').html();
+      loadFeed(1, function() {
+        done();
+      });
+    });
+
+    it('changes the content displayed', function(done) {
+      var newContent = $('.feed').html();
+      expect(currentContent).not.toBe(newContent);
+      done();
+    });
+  });
 }());

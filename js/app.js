@@ -17,6 +17,9 @@ var allFeeds = [
     }, {
         name: 'HTML5 Rocks',
         url: 'http://feeds.feedburner.com/html5rocks'
+    }, {
+        name: 'Linear Digressions',
+        url: 'http://feeds.feedburner.com/udacity-linear-digressions'
     }
 ];
 
@@ -34,8 +37,10 @@ function init() {
  * perform all of the DOM operations required to display
  * feed entries on the page. Feeds are referenced by their
  * index position within the allFeeds array.
+ * This function all supports a callback as the second parameter
+ * which will be called after everything has run successfully.
  */
-function loadFeed(id) {
+function loadFeed(id, cb) {
     var feedUrl = allFeeds[id].url,
         feedName = allFeeds[id].name,
         feed = new google.feeds.Feed(feedUrl);
@@ -67,6 +72,10 @@ function loadFeed(id) {
             entries.forEach(function(entry) {
                 container.append(entryTemplate(entry));
             });
+        }
+
+        if (cb) {
+            cb();
         }
     });
 }
